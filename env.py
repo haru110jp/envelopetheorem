@@ -20,4 +20,5 @@ x = np.linspace(-2, 10, 200)
 y = np.sin(x)
 ax.plot(x, y, 'r-', linewidth=2, label='sine function', alpha=0.6)
 ax.legend(loc='lower right')
-plt.show()
+
+#hello,japan
