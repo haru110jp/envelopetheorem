@@ -8,6 +8,11 @@ P_COUNT_MAX = 10
 P_COUNT_MIN = -P_COUNT_MAX
 P_INCREMENT = 0.5
 
+# As a,we're gonna define x. 
+x_max=5
+x_min = -x_max
+x_increment= 0.05
+x_ticks = 2*x_max/x_increment
 
 def f(x):
 	return x**2  #sample
@@ -32,9 +37,9 @@ def subplots():
 fig, ax = subplots()  # Call the local version, not plt.subplots()
 ax.tick_params(which="both",bottom="off",top="off",left="off",right="off",labelbottom="off",labeltop="off",labelleft="off",labelright="off")
 
-x = np.linspace(-5, 5, 200)
+x = np.linspace(x_min,x_max,x_ticks)
 y = f(x)
-ax.plot(x, y, 'b-', linewidth=2)
+ax.plot(x, y, 'k-', linewidth=3)
 
 t=[]
 for i in range(P_COUNT_MIN, P_COUNT_MAX+1):
@@ -44,4 +49,5 @@ for i in t:
 	tan=x*slope(f,i)+f(i)-slope(f,i)*i
 	ax.plot(x,tan,"b-",linewidth=1) #drawing tangent lines
 
+ax.set_title("Envelope Theorem")
 plt.show()
