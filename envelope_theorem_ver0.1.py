@@ -41,13 +41,10 @@ x = np.linspace(x_min,x_max,x_ticks)
 y = f(x)
 ax.plot(x, y, 'k-', linewidth=3)
 
-t=[]
 for i in range(P_COUNT_MIN, P_COUNT_MAX+1):
-    t.append(P_INCREMENT*i)  # Constants defined at the beginning
-
-for i in t:
-	tan=x*slope(f,i)+f(i)-slope(f,i)*i
+	tan=x*slope(f,P_INCREMENT*i)+f(P_INCREMENT*i)-slope(f,P_INCREMENT*i)*(P_INCREMENT*i)
 	ax.plot(x,tan,"b-",linewidth=1) #drawing tangent lines
+
 
 ax.set_title("Envelope Theorem")
 plt.show()
