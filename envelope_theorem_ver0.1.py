@@ -37,7 +37,7 @@ def subplots():
 
 fig, ax = subplots()  # Call the local version, not plt.subplots()
 ax.tick_params(which="both",bottom="off",top="off",left="off",right="off",labelbottom="off",labeltop="off",labelleft="off",labelright="off")
-pylab.ylim(-5,30)
+pylab.ylim(-10,30) # Moving x-axis downward 
 x = np.linspace(x_min,x_max,x_ticks)
 y = f(x)
 ax.plot(x, y, 'k-', linewidth=3)
