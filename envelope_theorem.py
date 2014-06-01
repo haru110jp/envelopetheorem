@@ -4,9 +4,12 @@ import numpy as np
 
 # parameter a = P_INCREMENT * P_COUNT_MIN, P_INCREMENT * (P_COUNT_MIN + 1),
 #               ..., P_INCREMENT * P_COUNT_MAX
-P_COUNT_MAX = 10
+P_COUNT_MAX = 9
 P_COUNT_MIN = -P_COUNT_MAX
 P_INCREMENT = 0.5
+#P_INCREMENT = 1.2
+
+#choose 0.5 if you want a smooth curve.
 
 # As a,we're gonna define x. 
 x_max=5
@@ -39,7 +42,8 @@ ax.tick_params(which="both",bottom="off",top="off",left="off",right="off",labelb
 ax.set_ylim(-10,30) # Moving x-axis downward 
 x = np.linspace(x_min,x_max,x_ticks)
 y = f(x)
-ax.plot(x, y, 'k-', linewidth=3)
+ax.plot(x, y, 'k-', linewidth=3) #this is not necessary if you wanna draw a rough curve
+
 
 for i in range(P_COUNT_MIN, P_COUNT_MAX+1):
 	tan=x*slope(f,P_INCREMENT*i)+f(P_INCREMENT*i)-slope(f,P_INCREMENT*i)*(P_INCREMENT*i)
@@ -47,4 +51,5 @@ for i in range(P_COUNT_MIN, P_COUNT_MAX+1):
 
 
 ax.set_title("Envelope Theorem")
+plt.savefig("envelope0.pdf",bbox_inches="tight",pad_inches=0)
 plt.show()
