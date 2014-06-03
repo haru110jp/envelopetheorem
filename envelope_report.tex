@@ -1,6 +1,8 @@
 \documentclass[11pt,a4j,fleqn]{jarticle}
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage[dvipdfmx]{graphicx}
+\usepackage{here}
+
 
 \title{包絡線定理・レポート}
 \author{山岸　敦}
@@ -51,44 +53,107 @@ f(x, t) = 2×2x-2^2 = 4x-4
 図2はより多くのtの値に対して$f(x,t)$を同様にプロットしたもので、本数を増やすにつれ$x^2$が浮かび上がってくるのがわかるだろう。
 このように、$f(x,t)$の変数tの値を変えたグラフを何本も描くことで、最適値がどうパラメーターによって変わるかを示すグラフ$V(x)$が描ける、というのが包絡線定理の主張である。
 
-\begin{figure}[!p]
+
+
+\begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.6]{envelope1.pdf}
+\includegraphics[scale=0.5]{envelope1.pdf}
 \end{center}
 \caption{接線の本数が少なめの状態}
 \label{fig:1}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 \begin{center}
-\includegraphics[scale=0.6]{envelope0.pdf}
+\includegraphics[scale=0.5]{envelope0.pdf}
 \end{center}
 \caption{多くの接線を引いた状態}
 \label{fig:2}
 \end{figure}
 
 
-
-
-
 \section{Pythonプログラム}
 
-自分のPythonプログラムの説明を書く．
+さて、ここからは描画につかったpythonプログラムのコードを解説しよう。
 
 コードの表示の例
 \begin{quote}
 \begin{verbatim}
-import numpy
-from matplotlib import pyplot
-x = numpy.arange(0, 10, 0.1)
-y = numpy.cos(x)
-pyplot.plot(x,y)
-pyplot.show()
+from __future__ import division
+import matplotlib.pyplot as plt
+import numpy as np
+
+# parameter a = P_INCREMENT * P_COUNT_MIN, P_INCREMENT * (P_COUNT_MIN + 1),
+#               ..., P_INCREMENT * P_COUNT_MAX
+P_COUNT_MAX = 9
+P_COUNT_MIN = -P_COUNT_MAX
+P_INCREMENT = 0.5
+#P_INCREMENT = 1.2
+
+#choose 0.5 if you want a smooth curve.
+
+# As a,we're gonna define x. 
+x_max=5
+x_min = -x_max
+x_increment= 0.05
+x_ticks = 2*x_max/x_increment
+
+def f(x):
+	return x**2  #sample
+
+def slope(f,a): #approximating the slope of a tangent line
+	return (f(a+0.0001)-f(a))/0.0001
+
+
+def subplots():
+    "Custom subplots with axes throught the origin"
+    fig, ax = plt.subplots()
+
+    # Set the axes through the origin
+    for spine in ['left', 'bottom']:
+        ax.spines[spine].set_position('zero')
+    for spine in ['right', 'top']:
+        ax.spines[spine].set_color('none')
+
+    return fig, ax
+
+
+fig, ax = subplots()  # Call the local version, not plt.subplots()
+ax.tick_params(which="both",bottom="off",top="off",left="off",right="off",
+labelbottom="off",labeltop="off",labelleft="off",labelright="off")
+ax.set_ylim(-10,30) # Moving x-axis downward 
+x = np.linspace(x_min,x_max,x_ticks)
+
+y = f(x)
+ax.plot(x, y, 'k-', linewidth=3)
+#this is not necessary if you wanna draw a rough curve
+
+
+for i in range(P_ COUNT_MIN, P_COUNT_MAX+1):
+	tan = 
+	x*slope(f,P_INCREMENT*i)+f(P_INCREMENT*i)-slope(f,P_INCREMENT*i)*(P_INCREMENT*i)
+	ax.plot(x,tan,"b-",linewidth=1) #drawing tangent lines
+
+
+ax.set_title("Envelope Theorem")
+plt.savefig("envelope0.pdf",bbox_inches="tight",pad_inches=0)
+plt.show()
 \end{verbatim}
 \end{quote}
 
-\verb|\begin{verbatim}| ... \verb|\end{verbatim}| の中では改行は自動ではされない．
-長すぎてページからはみ出す行は自分で適宜改行する．
+
+まず最初に断っておくが、このプログラムは描画目的であって、多少包絡線定理の趣旨とは違った方法で作図している。
+「最初に$x^2$を定義し、それに接線を書く」という方針で作図しているが、包絡線定理に素直に従えば「$f(x,t)$をtの値を変えて沢山プロットし、$x^2$が浮かび上がらせる」という方針になる。その意味で、このプログラムはいわば天下り的に作図していることをご了承願いたい。では、各部分の解説に入ろう。\\
+
+
+まずmatplotlibとnumpyから必要なものをimportし、その後で変数の設定パートに入っている。
+
+\verb!x_max!はグラフを書く範囲（xの定義域）の最大値を指定している。プログラム上での描画処理の関係上、グラフ上のすべての点を計算し、それを結んでグラフを書くことはできない（有理数は無限にあるのだから…）。だから、でどれくらいの間隔でグラフ上の点を計算して結ぶかを指定している（グラフのなめらかさ、とでも言うべきか）。は描画につかうxの数である。\\
+
+さて、Section2の$V(x)$は$x^2$だったから、ここでもそれを定義した。次のslope関数は、グラフの接線を求める関数で、要するに「微分」を近似的にやっている関数である。
+さらに、subplot関数を定義する。これは、
+
+
 
 
 
