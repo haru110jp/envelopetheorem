@@ -2,7 +2,7 @@
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{here}
-
+\usepackage{ascmac}
 
 \title{包絡線定理・レポート}
 \author{山岸　敦}
@@ -75,13 +75,19 @@ f(x, t) = 2×2x-2^2 = 4x-4
 \begin{equation}
 .\frac{dV(x)}{dx} = \frac{d}{dx}f(x,t(x))  
 \end{equation}
-です。関数fにt=xを代入してから、xで微分しろと言っているわけです。ところでこの点においては、接線たる$f(x,t)$の傾きと(3)の値は一致しているはずです。つまり
+です。関数fにt=xを代入してから、xで微分しろと言っているわけである。ところでこの点においては、接線たる$f(x,t)$の傾きと(3)の値は一致しているはずだ。つまり
 
 \begin{equation}
 \left.\frac{\partial f(x,t)}{\partial x}\right|_{t = x} 
 \end{equation}
 
-と(3)の値は一致します。(4)は「xで微分してからtにxを代入する」という意味ですから、代入と微分の順序が逆転しています。一般には両者は一致しませんが、変数に最適値を代入して作る包絡線の場合には一致する、という寸法である。これを包絡線定理、と呼ぶ。
+と(3)の値は一致する（図参照）。(4)は「xで微分してからtにxを代入する」という意味だから、先程と代入と微分の順序が逆転している。一般には両者は一致しないのだが、変数に最適値を代入して作る包絡線の場合には一致する、という寸法である。これを包絡線定理、と呼ぶ。これをまとめておこう。\\
+
+\begin{shadebox}
+包絡線定理\\
+$ \frac{dV(x)}{dx} = \frac{d}{dx}f(x,t(x)) =\left.\frac{\partial f(x,t)}{\partial x}\right|_{t = x} $
+
+\end{shadebox}
 
 \section{Pythonプログラム}
 
